@@ -24,6 +24,9 @@ go install github.com/fzipp/gocyclo/cmd/gocyclo@latest
 # Install gocritic
 go install -v github.com/go-critic/go-critic/cmd/gocritic@latest
 
+# Install documentation viewer.
+sudo apt install golang-golang-x-tools
+
 # Optional (if it says ... gostatic not found etc):
 export GOPATH="$HOME/go"
 export PATH=$PATH:$GOPATH/bin
@@ -43,6 +46,12 @@ go build -o out
 
 ```sh
 go test ./... -coverprofile=coverage.out
+```
+
+## View documentation
+
+```sh
+godoc -http=:6060
 ```
 
 ## Import dependencies

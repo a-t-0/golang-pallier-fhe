@@ -1,6 +1,6 @@
 package fhe
 
-// Function to add 2 to an integer
+// AddTwo adds 2 to an incoming integer x.
 func AddTwo(x int) int {
 	return x + 2
 }

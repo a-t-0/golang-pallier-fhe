@@ -2,8 +2,6 @@ package fhe
 
 import "testing"
 
-// import "../pkg/fhe"
-
 // Test for the AddTwo function
 func TestAddTwo(t *testing.T) {
 	// Test case 1: Adding 2 to 3 should result in 5
