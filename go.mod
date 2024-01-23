@@ -1,16 +1,10 @@
-module github.com/hashicorp/consul
+module github.com/a-t-0/golang-pallier-fhe
 
 go 1.20
 
-replace (
-	github.com/hashicorp/consul/api => ./api
-	github.com/hashicorp/consul/envoyextensions => ./envoyextensions
-	github.com/hashicorp/consul/proto-public => ./proto-public
-	github.com/hashicorp/consul/sdk => ./sdk
-	github.com/hashicorp/consul/troubleshoot => ./troubleshoot
-)
+require rsc.io/quote v1.5.2
 
-exclude (
-	github.com/hashicorp/go-msgpack v1.1.5 // has breaking changes and must be avoided
-	github.com/hashicorp/go-msgpack v1.1.6 // contains retractions but same as v1.1.5
+require (
+	golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c // indirect
+	rsc.io/sampler v1.3.0 // indirect
 )

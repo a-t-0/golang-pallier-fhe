@@ -37,6 +37,25 @@ go build -o out
 ./out
 ```
 
+## Run tests
+
+[Source](https://blogs.halodoc.io/golang-unit-testing/)
+
+```sh
+go test ./... -coverprofile=coverage.out
+```
+
+## Import dependencies
+
+```sh
+go mod tidy
+go run .
+```
+
+## Creating pip-package like dependency
+
+[Source](https://go.dev/doc/tutorial/create-module)
+
 ## Go=Golang resources
 
 [handbook](https://www.freecodecamp.org/news/learn-golang-handbook/)
