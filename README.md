@@ -36,8 +36,7 @@ export PATH=$PATH:$GOPATH/bin
 ## Run code
 
 ```sh
-go build -o out
-./out
+go build -o out && ./out
 ```
 
 ## Run tests
@@ -57,8 +56,7 @@ godoc -http=:6060
 ## Import dependencies
 
 ```sh
-go mod tidy
-go run .
+go mod tidy && go run .
 ```
 
 ## Creating pip-package like dependency
