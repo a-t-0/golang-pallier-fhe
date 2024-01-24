@@ -37,7 +37,8 @@ func ComputeL(x *big.Int, n *big.Int) *big.Int {
 
 	// Compute the result using big.Int's Div method
 	// TODO: Important: verify you should also subtract 1 at the bottom.
-	result := new(big.Int).Sub(x, big.NewInt(1)).Div(new(big.Int).Sub(x, big.NewInt(1)), n)
+	result := new(big.Int)
+	result = new(big.Int).Sub(x, big.NewInt(1)).Div(new(big.Int).Sub(x, big.NewInt(1)), n)
 
 	// Convert the result to an int
 	return result

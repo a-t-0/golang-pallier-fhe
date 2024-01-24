@@ -7,7 +7,7 @@ import (
 
 // Test for the AddTwo function
 func TestComputeLambda(t *testing.T) {
-	t.SkipNow()
+
 	// Test case 1: Adding 2 to 3 should result in 5
 	var left *big.Int = big.NewInt(13)
 	var right *big.Int = big.NewInt(17)

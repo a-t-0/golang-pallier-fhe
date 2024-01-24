@@ -7,7 +7,7 @@ import (
 
 // Test for the AddTwo function
 func TestGcd(t *testing.T) {
-	// t.SkipNow()
+
 	// Test case 1: Adding 2 to 3 should result in 5
 	resultOne := Gcd(big.NewInt(8), big.NewInt(12))
 	expectedOne := big.NewInt(4)
@@ -34,5 +34,20 @@ func TestGcd(t *testing.T) {
 	expected_four := big.NewInt(5)
 	if result_four.Cmp(expected_four) != 0 {
 		t.Errorf("Expected %d, but got %d", expected_four, result_four)
+	}
+}
+
+func TestFindQkAndRk(t *testing.T) {
+	rk2 := big.NewInt(17)
+	rk1 := big.NewInt(4)
+	q, rk0 := findQkAndRk(rk2, rk1)
+
+	expectedQ := big.NewInt(4)
+	expectedRk0 := big.NewInt(1)
+	if expectedQ.Cmp(q) != 0 {
+		t.Errorf("Expected %d, but got %d", expectedQ, q)
+	}
+	if expectedRk0.Cmp(rk0) != 0 {
+		t.Errorf("Expected %d, but got %d", expectedRk0, rk0)
 	}
 }

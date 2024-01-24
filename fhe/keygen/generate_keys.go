@@ -7,6 +7,7 @@ import (
 	"github.com/a-t-0/golang-pallier-fhe/fhe/helper"
 )
 
+// TODO: loop over list of original and encrypted message values in test.
 func getKeys() (*big.Int, *big.Int, *big.Int, *big.Int) {
 	p, q := pickTwoLargePrimes()
 	n := computePrimeProduct(p, q)
@@ -18,6 +19,7 @@ func getKeys() (*big.Int, *big.Int, *big.Int, *big.Int) {
 
 // pickTwoLargePrimes returns two large prime numbers randomly and
 // independently such that gcd(pq,(p−1)(q−1)) is 1.
+// TODO: Allow getting random primes.
 func pickTwoLargePrimes() (*big.Int, *big.Int) {
 	p := big.NewInt(13)
 	q := big.NewInt(17)
@@ -55,6 +57,8 @@ func ComputeLambda(p *big.Int, q *big.Int) *big.Int {
 //     group under multiplication. In this context, it implies that for any two
 //     elements a and b in {Z_{n^2}}^*, their product a*b is also in
 //     {Z_{n^2}}^*.
+//
+// TODO: allow getting a random G.
 func getRandG(n *big.Int) *big.Int {
 	// TODO: assert g is integer.
 	// TODO: assert g is larger than 1.
@@ -74,14 +78,18 @@ func getModularMultiplicativeInverse(g *big.Int, lambda *big.Int, n *big.Int) *b
 	// TODO: separate into separate functions and test each step.
 
 	// Calculate g^lambda mod n^2
-	power := new(big.Int).Exp(g, lambda, nil)
-	gLambdaModN2 := new(big.Int).Mod(power, new(big.Int).Exp(n, big.NewInt(2), nil))
+	power := new(big.Int)
+	power = new(big.Int).Exp(g, lambda, nil)
+
+	gLambdaModN2 := new(big.Int)
+	gLambdaModN2 = new(big.Int).Mod(power, new(big.Int).Exp(n, big.NewInt(2), nil))
 
 	// Calculate L(g^lambda mod n^2)
-	l := decrypt.ComputeL(gLambdaModN2, n)
+	l := new(big.Int)
+	l = decrypt.ComputeL(gLambdaModN2, n)
 
 	// Calculate the modular multiplicative inverse μ = L(g^lambda mod n^2)^-1 mod n
-	modInverse := new(big.Int).ModInverse(l, n)
-
+	modInverse := new(big.Int)
+	modInverse = new(big.Int).ModInverse(l, n)
 	return modInverse
 }
