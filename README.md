@@ -27,6 +27,9 @@ go install -v github.com/go-critic/go-critic/cmd/gocritic@latest
 # Install documentation viewer.
 sudo apt install golang-golang-x-tools
 
+# Colorize test output.
+go install -v github.com/kyoh86/richgo
+
 # Optional (if it says ... gostatic not found etc):
 export GOPATH="$HOME/go"
 export PATH=$PATH:$GOPATH/bin
@@ -44,7 +47,13 @@ go build -o out && ./out
 [Source](https://blogs.halodoc.io/golang-unit-testing/)
 
 ```sh
-go test ./... -coverprofile=coverage.out
+clear && go test ./... -coverprofile=coverage.out
+```
+
+or with colour:
+
+```sh
+richgo test ./... -coverprofile=coverage.out
 ```
 
 ## View documentation
