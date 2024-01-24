@@ -1,32 +1,36 @@
 package keygen
 
 import (
-	// "math"
 	"math/big"
 
 	"github.com/a-t-0/golang-pallier-fhe/fhe/helper"
 )
 
-// AddTwo adds 2 to an incoming integer x.
-func AddTwo(x int) int {
-	// TODO: verify they yield a valid mu for getModularMultiplicativeInverse.
-	return x + 2
+func getKeys() (*big.Int, *big.Int, *big.Int, *big.Int) {
+	p, q := pickTwoLargePrimes()
+	n := computePrimeProduct(p, q)
+	g := getRandG(n)
+	lambda := ComputeLambda(p, q)
+	mu := getModularMultiplicativeInverse(g, lambda, n)
+	return n, g, lambda, mu
 }
 
 // pickTwoLargePrimes returns two large prime numbers randomly and
 // independently such that gcd(pq,(p−1)(q−1)) is 1.
-func pickTwoLargePrimes() (int, int) {
-	var p int = 13
-	var q int = 17
+func pickTwoLargePrimes() (*big.Int, *big.Int) {
+	p := big.NewInt(13)
+	q := big.NewInt(17)
 	return p, q
 }
 
 // computePrimeProduct returns the multiplication of two prime integers.
-func computePrimeProduct(p int, q int) int {
+func computePrimeProduct(p *big.Int, q *big.Int) *big.Int {
 	// TODO: assert p is prime.
 	// TODO: assert q is prime.
-	var n int = p * q
-	return n
+	// var n int = p * q
+	var n big.Int
+	n.Mul(p, q)
+	return &n
 }
 
 // ComputeL computes the L function as named by Pascal Pallier in the FHE
@@ -46,6 +50,7 @@ func ComputeL(x *big.Int, n *big.Int) *big.Int {
 	}
 
 	// Compute the result using big.Int's Div method
+	// TODO: Important: verify you should also subtract 1 at the bottom.
 	result := new(big.Int).Sub(x, big.NewInt(1)).Div(new(big.Int).Sub(x, big.NewInt(1)), n)
 
 	// Convert the result to an int
@@ -54,8 +59,8 @@ func ComputeL(x *big.Int, n *big.Int) *big.Int {
 
 // ComputeLambda returns the least common multiple of primes p and q (minus
 // one) like: lcm(p−1,q−1).
-func ComputeLambda(p int, q int) int {
-	var lambda int = helper.Lcm(p-1, q-1)
+func ComputeLambda(p *big.Int, q *big.Int) *big.Int {
+	lambda := helper.Lcm(p.Sub(p, big.NewInt(1)), q.Sub(q, big.NewInt(1)))
 	return lambda
 }
 
@@ -73,28 +78,37 @@ func ComputeLambda(p int, q int) int {
 //     group under multiplication. In this context, it implies that for any two
 //     elements a and b in {Z_{n^2}}^*, their product a*b is also in
 //     {Z_{n^2}}^*.
-func getRandG(n int) int {
+func getRandG(n *big.Int) *big.Int {
 	// TODO: assert g is integer.
 	// TODO: assert g is larger than 1.
 	// TODO: assert g < n^2.
-	var g int = 4886
+	// var g int = 4886
+	g := big.NewInt(4886)
 	return g
 }
 
-// // getModularMultiplicativeInverse returns an integer x of a such that the
-// // product a*x is congruent to 1 with respect to the modulus m.[1] In the
-// // standard notation of modular arithmetic this congruence is written as
-// // a x ≡ 1 ( mod m ). In this function, a = g^lambda mod n^2.
-// // Question: in case mu does not exist, what are the security implications if g
-// // is modified instead of starting again at pickTwoLargePrimes?
-// func getModularMultiplicativeInverse(g int, lambda int, n int) int {
-// 	// TODO: separate into separate functions and test each step.
-// 	// TODO: determine whether cast to float64 is required to compute
-// 	// exponents of int.
-// 	var exponent int = int(math.Pow(float64(g), float64(lambda)))
-// 	var a int = exponent % (n * n)
-// 	var L int = ComputeL(a, n)
-// 	var inverseL int = int(math.Pow(float64(L), float64(-1)))
-// 	var mu int = inverseL % n
-// 	return mu
-// }
+// getModularMultiplicativeInverse returns an integer x of a such that the
+// product a*x is congruent to 1 with respect to the modulus m.[1] In the
+// standard notation of modular arithmetic this congruence is written as
+// a x ≡ 1 ( mod m ). In this function, a = g^lambda mod n^2.
+// Question: in case mu does not exist, what are the security implications if g
+// is modified instead of starting again at pickTwoLargePrimes?
+func getModularMultiplicativeInverse(g *big.Int, lambda *big.Int, n *big.Int) *big.Int {
+	// TODO: separate into separate functions and test each step.
+	// TODO: determine whether cast to float64 is required to compute
+	// exponents of int.
+	// var exponent int = int(math.Pow(float64(g), float64(lambda)))
+	exponent := new(big.Int).Exp(g, lambda, nil)
+
+	// var a int = exponent % (n * n)
+	a := new(big.Int).Mod(exponent, new(big.Int).Mul(n, n))
+
+	L := ComputeL(a, n)
+
+	// var inverseL int = int(math.Pow(float64(L), float64(-1)))
+	inverseL := new(big.Int).Exp(L, big.NewInt(-1), nil)
+
+	// var mu int = inverseL % n
+	mu := new(big.Int).Mod(inverseL, n)
+	return mu
+}

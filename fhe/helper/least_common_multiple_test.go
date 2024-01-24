@@ -1,21 +1,26 @@
 package helper
 
-import "testing"
+import (
+	"math/big"
+	"testing"
+)
 
 // Test for the AddTwo function
-func TestAddTwo(t *testing.T) {
+func TestLcm(t *testing.T) {
+
 	// Test case 1: Adding 2 to 3 should result in 5
-	result_one := Lcm(8, 12)
-	expected_one := 24
-	if result_one != expected_one {
-		t.Errorf("Expected %d, but got %d", expected_one, result_one)
+	resultOne := Lcm(big.NewInt(8), big.NewInt(12))
+	expectedOne := big.NewInt(24)
+
+	if resultOne.Cmp(expectedOne) != 0 {
+		t.Errorf("Expected %d, but got %d", expectedOne, resultOne)
 	}
 
 	// Test case 2: Adding 2 to -1 should result in 1
-	result_two := Lcm(15, 20)
-	expected_two := 60
-	if result_two != expected_two {
-		t.Errorf("Expected %d, but got %d", expected_two, result_two)
+	resultTwo := Lcm(big.NewInt(15), big.NewInt(20))
+	expectedTwo := big.NewInt(60)
+	if resultTwo.Cmp(expectedTwo) != 0 {
+		t.Errorf("Expected %d, but got %d", expectedTwo, resultTwo)
 	}
 
 	// Add more test cases as needed

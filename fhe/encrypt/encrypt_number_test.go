@@ -7,7 +7,6 @@ import (
 
 // Test for the AddTwo function
 func TestEncryptNumber(t *testing.T) {
-
 	// Test case 1: Adding 2 to 3 should result in 5
 	var message *big.Int = big.NewInt(123)
 	var rand_nr *big.Int = big.NewInt(66)
@@ -15,9 +14,9 @@ func TestEncryptNumber(t *testing.T) {
 	var g *big.Int = big.NewInt(4886)
 
 	var resultOne *big.Int = EncryptNumber(message, rand_nr, n, g)
-	// var expected_one *big.Int = big.NewInt(25889)
+	// var expectedOne *big.Int = big.NewInt(25889)
 	var expectedOne *big.Int = big.NewInt(39655)
-	// if result_one != expected_one {
+	// if resultOne != expectedOne {
 	if resultOne.Cmp(expectedOne) != 0 {
 
 		t.Errorf("Expected %d, but got %d", expectedOne, resultOne)
