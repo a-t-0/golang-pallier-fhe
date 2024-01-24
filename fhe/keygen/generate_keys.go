@@ -1,7 +1,8 @@
-package fhe
+package keygen
 
 import (
-	"math"
+	// "math"
+	"math/big"
 
 	"github.com/a-t-0/golang-pallier-fhe/fhe/helper"
 )
@@ -28,18 +29,32 @@ func computePrimeProduct(p int, q int) int {
 	return n
 }
 
-// computeL computes the L function as named by Pascal Pallier in the FHE
-// presentation. L(x) = (x-1)/n.
-// TODO: determine whether L(x) may always be an integer.
-func computeL(x int, n int) int {
-	// TODO (optional): assert L is an integer.
-	var L int = int((x - 1) / n)
-	return L
+// ComputeL computes the L function as named by Pascal Pallier in the FHE
+// presentation. L(x) = [(x-1)/n], THIS IS NOT DIVIDE. This is: how often does
+// the bottom fit in the top, like [2/3]=0, [5/3=1], [7/3=2]. A more
+// mathematical description is:  the largest integer value v ≥ 0 to satisfy the
+// relation a >= v*b. The Python equivalent is 11 // 4 (=2).
+func ComputeL(x *big.Int, n *big.Int) *big.Int {
+	// Ensure x is non-negative
+	if x.Sign() < 0 {
+		panic("x must be non-negative")
+	}
+
+	// Ensure n is positive
+	if n.Sign() <= 0 {
+		panic("n must be positive")
+	}
+
+	// Compute the result using big.Int's Div method
+	result := new(big.Int).Sub(x, big.NewInt(1)).Div(new(big.Int).Sub(x, big.NewInt(1)), n)
+
+	// Convert the result to an int
+	return result
 }
 
-// computeLambda returns the least common multiple of primes p and q (minus
+// ComputeLambda returns the least common multiple of primes p and q (minus
 // one) like: lcm(p−1,q−1).
-func computeLambda(p int, q int) int {
+func ComputeLambda(p int, q int) int {
 	var lambda int = helper.Lcm(p-1, q-1)
 	return lambda
 }
@@ -66,20 +81,20 @@ func getRandG(n int) int {
 	return g
 }
 
-// getModularMultiplicativeInverse returns an integer x of a such that the
-// product a*x is congruent to 1 with respect to the modulus m.[1] In the
-// standard notation of modular arithmetic this congruence is written as
-// a x ≡ 1 ( mod m ). In this function, a = g^lambda mod n^2.
-// Question: in case mu does not exist, what are the security implications if g
-// is modified instead of starting again at pickTwoLargePrimes?
-func getModularMultiplicativeInverse(g int, lambda int, n int) int {
-	// TODO: separate into separate functions and test each step.
-	// TODO: determine whether cast to float64 is required to compute
-	// exponents of int.
-	var exponent int = int(math.Pow(float64(g), float64(lambda)))
-	var a int = exponent % (n * n)
-	var L int = computeL(a, n)
-	var inverseL int = int(math.Pow(float64(L), float64(-1)))
-	var mu int = inverseL % n
-	return mu
-}
+// // getModularMultiplicativeInverse returns an integer x of a such that the
+// // product a*x is congruent to 1 with respect to the modulus m.[1] In the
+// // standard notation of modular arithmetic this congruence is written as
+// // a x ≡ 1 ( mod m ). In this function, a = g^lambda mod n^2.
+// // Question: in case mu does not exist, what are the security implications if g
+// // is modified instead of starting again at pickTwoLargePrimes?
+// func getModularMultiplicativeInverse(g int, lambda int, n int) int {
+// 	// TODO: separate into separate functions and test each step.
+// 	// TODO: determine whether cast to float64 is required to compute
+// 	// exponents of int.
+// 	var exponent int = int(math.Pow(float64(g), float64(lambda)))
+// 	var a int = exponent % (n * n)
+// 	var L int = ComputeL(a, n)
+// 	var inverseL int = int(math.Pow(float64(L), float64(-1)))
+// 	var mu int = inverseL % n
+// 	return mu
+// }

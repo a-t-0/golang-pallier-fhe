@@ -1,4 +1,4 @@
-package fhe
+package keygen
 
 import "testing"
 
