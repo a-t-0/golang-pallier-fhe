@@ -1,4 +1,4 @@
-package keygen
+package decrypt
 
 import (
 	"math/big"
@@ -7,7 +7,7 @@ import (
 
 // Test for the AddTwo function
 func TestComputeL0(t *testing.T) {
-	t.SkipNow()
+
 	// Test case 1: Adding 2 to 3 should result in 5
 	var top *big.Int = big.NewInt(4)
 	var bottom *big.Int = big.NewInt(3)
@@ -19,7 +19,7 @@ func TestComputeL0(t *testing.T) {
 }
 
 func TestComputeL1(t *testing.T) {
-	t.SkipNow()
+
 	// Test case 1: Adding 2 to 3 should result in 5
 	var top *big.Int = big.NewInt(7)
 	var bottom *big.Int = big.NewInt(3)
@@ -31,7 +31,7 @@ func TestComputeL1(t *testing.T) {
 }
 
 func TestComputeL2(t *testing.T) {
-	t.SkipNow()
+
 	// Test case 1: Adding 2 to 3 should result in 5
 	var top *big.Int = big.NewInt(3)
 	var bottom *big.Int = big.NewInt(4)
@@ -43,7 +43,7 @@ func TestComputeL2(t *testing.T) {
 }
 
 func TestComputeL3(t *testing.T) {
-	t.SkipNow()
+
 	// Test case 1: Adding 2 to 3 should result in 5
 	var top *big.Int = big.NewInt(99)
 	var bottom *big.Int = big.NewInt(4)
