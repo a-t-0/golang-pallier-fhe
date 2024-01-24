@@ -10,6 +10,6 @@ func Lcm(a int, b int) int {
 	// TODO: assert p is a prime.
 	// TODO: assert lcm return value is an int.
 	// TODO: implement.
-	absoluteValue := math.Abs(float64(a * b))
-	return absoluteValue / gcd(a, b)
+	absoluteValue := int(math.Abs(float64(a * b)))
+	return absoluteValue / Gcd(a, b)
 }

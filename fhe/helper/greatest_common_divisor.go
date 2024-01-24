@@ -21,19 +21,22 @@ import (
 //
 // In this algorithm, q_k and r_k need to be searched iteratively using Euclids
 // division lemma: https://en.wikipedia.org/wiki/Euclidean_division.
-func gcd(a int, b int) int {
+func Gcd(a int, b int) int {
 	var rk2 int
 	var rk1 int
 	// var rk0 int
 	if a > b {
 		rk2 = a
 		rk1 = b
-	} else if b < a {
+	} else if a < b {
 		rk2 = b
 		rk1 = a
-	} else {
+	} else if a == b {
 		//TODO: return shortcut value.
 		err := errors.New("TODO: implement edge case of two computing gcd for 2 identical integers.")
+		fmt.Println("Error:", err.Error())
+	} else {
+		err := errors.New("If statements were incomplete.")
 		fmt.Println("Error:", err.Error())
 	}
 
@@ -43,7 +46,7 @@ func gcd(a int, b int) int {
 		fmt.Printf("rk2 = %d, rk1 = %d, q = %d, r0 = %d\n", rk2, rk1, q, rk0)
 		rk2, rk1 = rk1, rk0
 	}
-	return rk1
+	return rk2
 
 }
 
