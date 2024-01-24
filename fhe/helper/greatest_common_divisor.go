@@ -25,21 +25,19 @@ import (
 func Gcd(a *big.Int, b *big.Int) *big.Int {
 	var rk2 *big.Int
 	var rk1 *big.Int
-	// var rk0 int
-	// if a > b {
-	if a.Cmp(b) > 0 {
+
+	switch a.Cmp(b) {
+	case 1:
 		rk2 = a
 		rk1 = b
-		// } else if a < b {
-	} else if a.Cmp(b) < 0 {
+	case -1:
 		rk2 = b
 		rk1 = a
-		// } else if a == b {
-	} else if a.Cmp(b) == 0 {
-		//TODO: return shortcut value.
+	case 0:
+		// TODO: return shortcut value.
 		err := errors.New("todo: implement edge case of two computing gcd for 2 identical integers")
 		fmt.Println("Error:", err.Error())
-	} else {
+	default:
 		err := errors.New("if statements were incomplete")
 		fmt.Println("Error:", err.Error())
 	}

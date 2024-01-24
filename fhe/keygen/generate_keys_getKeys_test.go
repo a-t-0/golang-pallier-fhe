@@ -1,7 +1,6 @@
 package keygen
 
 import (
-	"fmt"
 	"math/big"
 	"testing"
 
@@ -15,10 +14,6 @@ func TestGetKeys(t *testing.T) {
 	var message *big.Int = big.NewInt(123)
 
 	n, g, lambda, mu := getKeys()
-	fmt.Printf("INTEST n %d\n", n)
-	fmt.Printf("INTEST g %d\n", g)
-	fmt.Printf("INTEST lambda %d\n", lambda)
-	fmt.Printf("INTEST mu %d\n", mu)
 
 	var rand_nr *big.Int = big.NewInt(666)
 	var encryptedMessage *big.Int = encrypt.EncryptNumber(message, rand_nr, n, g)
@@ -29,7 +24,6 @@ func TestGetKeys(t *testing.T) {
 	}
 
 	var decryptedMessage *big.Int = decrypt.DecryptNumber(encryptedMessage, lambda, n, mu)
-	// if resultOne != expectedOne {
 	if decryptedMessage.Cmp(message) != 0 {
 		t.Errorf("Expected message %d, but got decryptedMessage %d", message, decryptedMessage)
 	}

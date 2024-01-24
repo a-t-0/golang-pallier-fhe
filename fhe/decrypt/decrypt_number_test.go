@@ -21,5 +21,4 @@ func TestDecryptNumber(t *testing.T) {
 	if resultOne.Cmp(expectedOne) != 0 {
 		t.Errorf("Expected %d, but got %d", expectedOne, resultOne)
 	}
-
 }
