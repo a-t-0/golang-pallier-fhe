@@ -1,4 +1,4 @@
-package fhe
+package helper
 
 import (
 	"errors"
@@ -33,10 +33,10 @@ func Gcd(a int, b int) int {
 		rk1 = a
 	} else if a == b {
 		//TODO: return shortcut value.
-		err := errors.New("TODO: implement edge case of two computing gcd for 2 identical integers.")
+		err := errors.New("todo: implement edge case of two computing gcd for 2 identical integers")
 		fmt.Println("Error:", err.Error())
 	} else {
-		err := errors.New("If statements were incomplete.")
+		err := errors.New("if statements were incomplete")
 		fmt.Println("Error:", err.Error())
 	}
 

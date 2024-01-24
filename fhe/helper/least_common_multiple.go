@@ -1,4 +1,4 @@
-package fhe
+package helper
 
 import "math"
 

@@ -2,6 +2,8 @@ package fhe
 
 import (
 	"math"
+
+	"github.com/a-t-0/golang-pallier-fhe/fhe/helper"
 )
 
 // AddTwo adds 2 to an incoming integer x.
@@ -29,9 +31,9 @@ func computePrimeProduct(p int, q int) int {
 // computeL computes the L function as named by Pascal Pallier in the FHE
 // presentation. L(x) = (x-1)/n.
 // TODO: determine whether L(x) may always be an integer.
-func computeL(x int, n int) float64 {
+func computeL(x int, n int) int {
 	// TODO (optional): assert L is an integer.
-	var L float64 = (x - 1) / n
+	var L int = int((x - 1) / n)
 	return L
 }
 
@@ -70,11 +72,11 @@ func getRandG(n int) int {
 // a x ≡ 1 ( mod m ). In this function, a = g^lambda mod n^2.
 // Question: in case mu does not exist, what are the security implications if g
 // is modified instead of starting again at pickTwoLargePrimes?
-func getModularMultiplicativeInverse(g int, lambda int, n int) {
+func getModularMultiplicativeInverse(g int, lambda int, n int) int {
 	// TODO: separate into separate functions and test each step.
 	// TODO: determine whether cast to float64 is required to compute
 	// exponents of int.
-	var exponent int = int(math.Pow(float64(a), float64(b)))
+	var exponent int = int(math.Pow(float64(g), float64(lambda)))
 	var a int = exponent % (n * n)
 	var L int = computeL(a, n)
 	var inverseL int = int(math.Pow(float64(L), float64(-1)))
