@@ -29,6 +29,7 @@ sudo apt install golang-golang-x-tools
 
 # Colorize test output.
 go install -v github.com/kyoh86/richgo
+go get github.com/kyoh86/richgo
 
 # Optional (if it says ... gostatic not found etc):
 export GOPATH="$HOME/go"
